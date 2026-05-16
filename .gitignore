@@ -1,0 +1,4 @@
+.env
+*.task
+*.jpg
+usuarios/
