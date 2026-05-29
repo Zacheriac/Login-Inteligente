@@ -55,10 +55,10 @@ def generar_codigo():
 def enviar_codigo(correo_destino, nombre_usuario, tipo="registro"):
     codigo = generar_codigo()
     if tipo == "registro":
-        asunto = "✅ Confirma tu registro — Login Inteligente"
+        asunto = " Confirma tu registro — Login Inteligente"
         accion = "completar tu registro"
     else:
-        asunto = "🔐 Código de acceso — Login Inteligente"
+        asunto = " Código de acceso — Login Inteligente"
         accion = "acceder a tu cuenta"
 
     cuerpo_html = f"""
@@ -69,7 +69,7 @@ def enviar_codigo(correo_destino, nombre_usuario, tipo="registro"):
                     border-radius: 12px; padding: 30px;
                     box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
             <h2 style="color: #1a1a1a; text-align: center; margin-bottom: 5px;">
-                🔐 Login Inteligente
+                 Login Inteligente
             </h2>
             <p style="color: #666; text-align: center; margin-top: 0;">
                 Hola <strong>{nombre_usuario}</strong>, usa este código para {accion}:
@@ -84,11 +84,11 @@ def enviar_codigo(correo_destino, nombre_usuario, tipo="registro"):
                 </p>
             </div>
             <p style="color: #999; text-align: center; font-size: 13px;">
-                ⏱️ Este código expira en <strong>5 minutos</strong>.
+                 Este código expira en <strong>5 minutos</strong>.
             </p>
             <p style="color: #999; text-align: center; font-size: 12px;
                       border-top: 1px solid #eee; padding-top: 15px;">
-                🔒 No compartas este código con nadie.
+                 No compartas este código con nadie.
             </p>
         </div>
     </body>
@@ -326,7 +326,7 @@ def ventana_verificar_codigo(padre, codigo_correcto, callback_exito, subtitulo="
             win.destroy()
             callback_exito()
         else:
-            messagebox.showerror("❌ Código incorrecto",
+            messagebox.showerror(" X Código incorrecto",
                                  "El código no coincide. Intenta de nuevo.")
 
     ctk.CTkButton(
@@ -339,7 +339,7 @@ def ventana_verificar_codigo(padre, codigo_correcto, callback_exito, subtitulo="
 # ─────────────────────────────────────────────────────────────
 def ofrecer_codigo_alternativo(nombre, correo):
     respuesta = messagebox.askyesno(
-        "❌ Verificación facial fallida",
+        " X Verificación facial fallida",
         "El rostro no coincide con el registrado.\n\n"
         "¿Deseas recibir un código de acceso\n"
         "a tu correo como método alternativo?"
@@ -349,7 +349,8 @@ def ofrecer_codigo_alternativo(nombre, correo):
         if codigo:
             def acceso_por_codigo():
                 messagebox.showinfo(
-                    "✅ Bienvenido",
+                    " ✔ ",
+                    " Bienvenido",
                     "Acceso concedido por código de correo."
                 )
                 pantalla2.destroy()
@@ -358,10 +359,10 @@ def ofrecer_codigo_alternativo(nombre, correo):
                 subtitulo=f"Código enviado a {correo}"
             )
         else:
-            messagebox.showerror("❌ Error",
+            messagebox.showerror(" X Error",
                                  "No se pudo enviar el código.")
     elif respuesta and not correo:
-        messagebox.showerror("❌ Sin correo",
+        messagebox.showerror(" X Sin correo",
                              "No hay correo registrado.")
 
 # ─────────────────────────────────────────────────────────────
@@ -427,11 +428,11 @@ def registro():
                                    "Debes completar usuario, contraseña y correo.")
             return
         if "@" not in correo or "." not in correo:
-            messagebox.showerror("❌ Correo inválido",
+            messagebox.showerror(" X Correo inválido",
                                  "Ingresa un correo electrónico válido.")
             return
         if os.path.exists(nombre):
-            messagebox.showerror("❌ Usuario existente",
+            messagebox.showerror(" X Usuario existente",
                                  "Ese nombre de usuario ya está registrado.")
             return
 
@@ -440,7 +441,7 @@ def registro():
         codigo = enviar_codigo(correo, nombre, tipo="registro")
 
         if not codigo:
-            messagebox.showerror("❌ Error de correo",
+            messagebox.showerror(" X Error de correo",
                                  "No se pudo enviar el código. Verifica el correo.")
             lbl_estado.configure(text="", text_color="gray")
             return
@@ -456,13 +457,13 @@ def registro():
             pantalla1.update()
             exito = capturar_rostro(nombre, "Registro Facial — ESC para capturar")
             if exito:
-                lbl_estado.configure(text="✅ Registro completo", text_color="green")
-                messagebox.showinfo("✅ Registro exitoso",
+                lbl_estado.configure(text="✔ Registro completo", text_color="green")
+                messagebox.showinfo(" ✔ Registro exitoso",
                                     f"Bienvenido {nombre}!\nYa puedes iniciar sesión.")
                 pantalla1.destroy()
             else:
-                lbl_estado.configure(text="❌ No se detectó rostro", text_color="red")
-                messagebox.showerror("❌ Error facial",
+                lbl_estado.configure(text=" X No se detectó rostro", text_color="red")
+                messagebox.showerror(" X Error facial",
                                      "No se detectó un rostro. Intenta de nuevo.")
 
         ventana_verificar_codigo(
@@ -528,18 +529,18 @@ def login():
         contra = contra_var.get().strip()
 
         if not nombre or not contra:
-            messagebox.showwarning("⚠️ Campos vacíos",
+            messagebox.showwarning("⚠ Campos vacíos",
                                    "Ingresa usuario y contraseña.")
             return
 
         datos = leer_datos_usuario(nombre)
         if not datos:
-            messagebox.showerror("❌ Usuario no encontrado",
+            messagebox.showerror("X Usuario no encontrado",
                                  "No existe ese usuario. ¿Ya te registraste?")
             return
 
         if contra != datos[1]:
-            messagebox.showerror("❌ Contraseña incorrecta",
+            messagebox.showerror("X Contraseña incorrecta",
                                  "La contraseña no es correcta.")
             return
 
@@ -559,9 +560,9 @@ def login():
 
         es_real = detectar_parpadeo()
         if not es_real:
-            lbl_estado.configure(text="❌ Liveness fallido", text_color="red")
+            lbl_estado.configure(text="X Liveness fallido", text_color="red")
             messagebox.showerror(
-                "❌ No se detectó vida",
+                " X No se detectó vida",
                 "No se detectaron 2 parpadeos.\n"
                 "Mira de frente a la cámara y parpadea\n"
                 "de forma natural 2 veces.\n\n"
@@ -606,9 +607,9 @@ def login():
             frame_login, scaleFactor=1.1, minNeighbors=5
         )
         if len(faces_check) == 0:
-            lbl_estado.configure(text="❌ No se detectó rostro", text_color="red")
+            lbl_estado.configure(text="X No se detectó rostro", text_color="red")
             messagebox.showerror(
-                "❌ Sin rostro detectado",
+                "X Sin rostro detectado",
                 "No se detectó ningún rostro.\n"
                 "Asegúrate de estar frente a la cámara\n"
                 "con buena iluminación."
@@ -627,9 +628,9 @@ def login():
             caras    = detector.detect_faces(pixeles)
 
             if not caras:
-                lbl_estado.configure(text="❌ Rostro no procesado", text_color="red")
+                lbl_estado.configure(text="X Rostro no procesado", text_color="red")
                 messagebox.showerror(
-                    "❌ Rostro no válido",
+                    "X Rostro no válido",
                     "No se pudo procesar el rostro.\n"
                     "Intenta con mejor iluminación y de frente."
                 )
@@ -669,7 +670,7 @@ def login():
         rostro_log = cv2.imread(archivo_login + ".jpg")
 
         if rostro_reg is None or rostro_log is None:
-            messagebox.showerror("❌ Error", "No se pudieron cargar las imágenes.")
+            messagebox.showerror("X Error", "No se pudieron cargar las imágenes.")
             return
 
         rostro_reg = cv2.resize(rostro_reg, (150, 200))
@@ -679,9 +680,9 @@ def login():
         print(f"Similitud facial final: {similitud:.4f} ({similitud*100:.1f}%)")
 
         if similitud >= 0.50:
-            lbl_estado.configure(text="✅ Acceso concedido", text_color="green")
+            lbl_estado.configure(text="✔ Acceso concedido", text_color="green")
             messagebox.showinfo(
-                "✅ Bienvenido",
+                "✔ Bienvenido",
                 f"Hola {nombre}!\n"
                 f"Similitud facial: {similitud*100:.1f}%\n\n"
                 "Acceso concedido."
@@ -689,7 +690,7 @@ def login():
             pantalla2.destroy()
         else:
             lbl_estado.configure(
-                text=f"❌ Similitud {similitud*100:.1f}% — mínimo 50%",
+                text=f"X Similitud {similitud*100:.1f}% — mínimo 50%",
                 text_color="red"
             )
             ofrecer_codigo_alternativo(nombre, correo)
