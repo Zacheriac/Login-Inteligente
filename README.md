@@ -30,3 +30,4 @@ python Login_Vision.py
 - Requiere Python 3.11
 - La primera vez descarga automáticamente el modelo de MediaPipe (~3 MB)
 - Para obtener tu App Password de Gmail: Cuenta de Google → Seguridad → Verificación en dos pasos → Contraseñas de aplicación
+- Faltaría mejorar las ventajas emergentes para que sea más funcional
